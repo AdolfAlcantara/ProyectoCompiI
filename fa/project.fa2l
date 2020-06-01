@@ -1,0 +1,110 @@
+#include "ProjectLexer.h"
+
+/*!fa2lexer
+
+    %option generate.tokens = true;
+
+    %file "start.jff";
+    %file "decimal.jff";
+    %file "ident.jff";
+    %file "delimeter.jff";
+    %file "arimetical.jff";
+    %file "comments.jff";
+    %file "relational.jff";
+    %file "string.jff";
+
+    %token.descriptions {
+        Ident = "Identifier",
+        KwPrint = "print",
+        KwFor = "for",
+        KwIn = "in",
+        KwIf = "if",
+        KwElse = "else",
+        KwWhile = "while",
+        KwInput = "input",
+        KwDef = "def",
+        KwReturn = "return",
+        Indent = "indent",
+        Dedent = "dedent",
+        NewLine = "new_line"
+    }
+
+    %generate.state_enum(State);
+*/
+
+Token ProjectLexer::checkIndent(const std::string& str){
+    int _spaces = str.length();
+    std::cout<<"spaces entrando:" << _spaces << "\n";
+    std::cout<<"pila de espacios:" << spaces.size() << "\n";
+    for(int x = 0; x<spaces.size(); x++){
+        std::cout<<"pos:"<<x<<", text:"<<spaces[x] << "\n";
+    }
+
+    if(_spaces > spaces.back()){
+        spaces.push_back(_spaces);
+        std::cout<<"Push:" << _spaces << "\n\n";
+        return Token::Indent;
+    }else if(_spaces < spaces.back()){
+            while(_spaces != spaces.back()){
+                indentTokens.push_back(Token::Dedent);
+                std::cout<<"Pop:" << spaces.back() << "\n\n";
+                spaces.pop_back();
+            }
+            std::cout<<"indentTokens size: "<< indentTokens.size() << "\n";
+            Token temp = indentTokens.back();
+            temp = indentTokens.back();
+            indentTokens.pop_back();
+            return temp;
+    }else{
+        return Token::NewLine;
+    }
+}
+
+
+
+Token ProjectLexer::findKeyword(const std::string& str){
+    if(str == "print"){
+        return Token::KwPrint;
+    }else if(str == "for"){
+        return Token::KwFor;
+    }else if(str == "in"){
+        return Token::KwIn;
+    }else if(str == "if"){
+        return Token::KwIf;
+    }else if(str == "else"){
+        return Token::KwElse;
+    }else if(str == "while"){
+        return Token::KwWhile;
+    }else if(str == "input"){
+        return Token::KwInput;
+    }else if(str == "def"){
+        return Token::KwDef;
+    }else if(str == "return"){
+        return Token::KwReturn;
+    }else{
+        return Token::Ident;
+    }
+}
+
+Token ProjectLexer::getNextToken()
+{
+    text = "";
+    //std::cout<<"indentTokens size: "<< indentTokens.size() << "\n";
+    if(indentTokens.size() > 0){
+        Token temp = indentTokens.back();
+        indentTokens.pop_back();
+        return temp;
+    }
+
+    /*!fa2lexer
+
+        %generate.lexer(text);
+    */
+}
+
+const char *ProjectLexer::tokenToString(Token tk)
+{
+    /*!fa2lexer
+    %generate.toString(tk);
+    */
+}
