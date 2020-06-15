@@ -19,36 +19,6 @@
 			<label>Symbol::CLOSE_PARENTHESIS</label>
 			<final/>
 		</state>
-		<state id="4" name="q4">
-			<x>699.0</x>
-			<y>180.0</y>
-			<label>Symbol::DoubleDots</label>
-			<final/>
-		</state>
-		<state id="5" name="q5">
-			<x>701.0</x>
-			<y>331.0</y>
-			<label>Symbol::LKey</label>
-			<final/>
-		</state>
-		<state id="6" name="q6">
-			<x>688.0</x>
-			<y>427.0</y>
-			<label>Symbol::RKey</label>
-			<final/>
-		</state>
-		<state id="7" name="q7">
-			<x>653.0</x>
-			<y>479.0</y>
-			<label>Symbol::LBra</label>
-			<final/>
-		</state>
-		<state id="8" name="q8">
-			<x>630.0</x>
-			<y>563.0</y>
-			<label>Symbol::RBra</label>
-			<final/>
-		</state>
 		<state id="9" name="q9">
 			<x>713.0</x>
 			<y>254.0</y>
@@ -58,38 +28,13 @@
 		<!--The list of transitions.-->
 		<transition>
 			<from>0</from>
-			<to>4</to>
-			<read>:</read>
-		</transition>
-		<transition>
-			<from>0</from>
 			<to>2</to>
 			<read>(</read>
 		</transition>
 		<transition>
 			<from>0</from>
-			<to>6</to>
-			<read>}</read>
-		</transition>
-		<transition>
-			<from>0</from>
 			<to>3</to>
 			<read>)</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>5</to>
-			<read>{</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>8</to>
-			<read>]</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>7</to>
-			<read>[</read>
 		</transition>
 		<transition>
 			<from>0</from>

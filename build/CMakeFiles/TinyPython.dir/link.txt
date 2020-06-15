@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/TinyPython.dir/main.cpp.o CMakeFiles/TinyPython.dir/ProjectLexer.cpp.o  -o TinyPython 

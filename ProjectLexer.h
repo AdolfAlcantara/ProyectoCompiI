@@ -5,7 +5,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
-#include "tokens.h"
+#include "ggrammar.h"
 
 class ProjectLexer
 {
@@ -23,17 +23,17 @@ public:
         spaces.push_back(0);
     }
 
-    Token getNextToken();
-    Token findKeyword(const std::string& str);
-    Token checkIndent(const std::string& str);
-    static const char* tokenToString(Token tk);
+    Symbol getNextSymbol();
+    Symbol findKeyword(const std::string& str);
+    Symbol checkIndent(const std::string& str);
+    static const char* SymbolToString(Symbol tk);
 
 
 private:
     std::string text;
     std::istream& input;
     std::vector<int> spaces;
-    std::vector<Token> indentTokens;
+    std::vector<Symbol> indentSymbols;
     
 };
 

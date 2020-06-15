@@ -1,4 +1,4 @@
-#include "ProjectLexer.h"
+#include "ProjectParser.cpp"
 
 int main (int argc, char *argv[])
 {
@@ -14,11 +14,17 @@ int main (int argc, char *argv[])
     }
 
     ProjectLexer project_lexer(input);
+    ProjectParser parser(project_lexer);
 
-    Token tk = project_lexer.getNextToken();
+    // Symbol tk = project_lexer.getNextSymbol();
 
-    while(tk!= Token::Eof){
-        std::cout<<"Token: " << ProjectLexer::tokenToString(tk) << ", Lexema: " << project_lexer.getText() <<"\n";
-        tk = project_lexer.getNextToken();
+    // while(tk!= Symbol::Eof){
+    //     std::cout<<"Symbol: " << ProjectLexer::SymbolToString(tk) << ", Lexema: " << project_lexer.getText() <<"\n";
+    //     tk = project_lexer.getNextSymbol();
+    // }
+    try{
+        parser.parse();
+    }catch(error_t message){
+        std::cerr<<"Ocurrio un error al parsear\n";
     }
 }

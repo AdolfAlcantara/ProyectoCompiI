@@ -26,43 +26,43 @@
 		<state id="5" name="q5">
 			<x>515.0</x>
 			<y>46.0</y>
-			<label>Token::LessOrEqual</label>
+			<label>Symbol::LessOrEqual</label>
 			<final/>
 		</state>
 		<state id="6" name="q6">
 			<x>553.0</x>
 			<y>196.0</y>
-			<label>Token::GreaterOrEqual</label>
+			<label>Symbol::GreaterOrEqual</label>
 			<final/>
 		</state>
 		<state id="7" name="q7">
 			<x>527.0</x>
 			<y>448.0</y>
-			<label>Token::Equal</label>
+			<label>Symbol::Equal</label>
 			<final/>
 		</state>
 		<state id="8" name="q8">
 			<x>497.0</x>
 			<y>563.0</y>
-			<label>Token::Different</label>
+			<label>Symbol::Different</label>
 			<final/>
 		</state>
 		<state id="9" name="q9">
 			<x>446.0</x>
 			<y>113.0</y>
-			<label>Token::LessThan</label>
+			<label>Symbol::LessThan</label>
 			<final/>
 		</state>
 		<state id="10" name="q10">
 			<x>429.0</x>
 			<y>259.0</y>
-			<label>Token::GreaterThan</label>
+			<label>Symbol::GreaterThan</label>
 			<final/>
 		</state>
 		<state id="11" name="q11">
 			<x>423.0</x>
 			<y>342.0</y>
-			<label>Token::Asignation</label>
+			<label>Symbol::Asignation</label>
 			<final/>
 		</state>
 		<!--The list of transitions.-->

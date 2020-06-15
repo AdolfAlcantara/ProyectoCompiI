@@ -1,0 +1,48 @@
+single_input -> stmt_list opt_eol
+
+opt_eol -> EOL
+
+stmt_list -> stmt
+stmt_list_p -> EOL stmt stmt_list_p
+stmt_list_p -> ''
+
+stmt -> assign
+stmt -> print 
+
+print -> KwPrint String , expr (, String expr)*
+
+assig -> Ident = expr
+
+expr -> term expr_p
+expr_p -> + term expr_p
+expr_p -> - term expr_p
+expr_p -> ''
+//expr -> term (+ term)* (- tem)*
+//expr -> expr + term
+//expr -> expr - term
+//expr -> term
+
+term -> prod term_p
+term_p -> * prod term_p
+term_p -> / prod term_p
+term_p -> '' 
+//term -> prod (* prod)* (/ prod)
+//term -> term * prod
+//term -> term / prod
+//term -> prod
+
+prod -> factor prod_p
+prod_p -> % factor prod_p
+prod_p -> ** factor prod_p
+prod_p -> ''
+//prod -> factor (% factor)* (** factor)*
+//prod -> prod % factor
+//prod -> prod ** factor
+//prod -> factor
+
+factor -> Ident
+factor -> Number
+factor -> (expr)
+factor -> func
+
+func -> KwInput ( String )

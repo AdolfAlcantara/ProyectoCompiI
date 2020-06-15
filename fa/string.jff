@@ -14,7 +14,7 @@
 		<state id="2" name="q2">
 			<x>417.0</x>
 			<y>147.0</y>
-			<label>Token::String</label>
+			<label>Symbol::String</label>
 			<final/>
 		</state>
 		<state id="3" name="q3">

@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Run FA2LEXER to generate the lexer
 add_custom_command (
   OUTPUT ProjectLexer.cpp
-  COMMAND fa2lexer --hdr tokens.h --src ProjectLexer.cpp --tpl ${PROJECT_SOURCE_DIR}/fa/project.fa2l
+  COMMAND fa2lexer --src ProjectLexer.cpp --tpl ${PROJECT_SOURCE_DIR}/fa/project.fa2l
   MAIN_DEPENDENCY ${PROJECT_SOURCE_DIR}/fa/project.fa2l
   DEPENDS ${PROJECT_SOURCE_DIR}/fa/start.jff
 

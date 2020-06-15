@@ -1,0 +1,95 @@
+enum class Symbol: unsigned {
+    single_input = 0,
+    stmt_list = 1,
+    stmt = 2,
+    stmt_list_p = 3,
+    stmt_p = 4,
+    assign = 5,
+    print = 6,
+    expr = 7,
+    print_p = 8,
+    term = 9,
+    expr_p = 10,
+    prod = 11,
+    term_p = 12,
+    factor = 13,
+    prod_p = 14,
+    func = 15,
+    Eof = 16,
+    NewLine = 17,
+    KwPrint = 18,
+    String = 19,
+    COMMA = 20,
+    Ident = 21,
+    EQUAL = 22,
+    PLUS = 23,
+    MINUS = 24,
+    ASTERISK = 25,
+    FORWARD_SLASH = 26,
+    PERCENT = 27,
+    Exp = 28,
+    Number = 29,
+    OPEN_PARENTHESIS = 30,
+    CLOSE_PARENTHESIS = 31,
+    KwInput = 32,
+    Epsilon = 33,
+    KwFor = 34,
+    KwIn = 35,
+    KwIf = 36,
+    KwElse = 37,
+    KwWhile = 38,
+    KwDef = 39,
+    KwReturn = 40,
+    Indent = 41,
+    Dedent = 42
+};
+
+const char *ProjectLexer::SymbolToString(Symbol tk)
+{
+        switch (tk) {
+        case Symbol::single_input: return "single_input";
+        case Symbol::stmt_list: return "stmt_list";
+        case Symbol::stmt: return "stmt";
+        case Symbol::stmt_list_p: return "stmt_list_p";
+        case Symbol::stmt_p: return "stmt_p";
+        case Symbol::print: return "print";
+        case Symbol::expr: return "expr";
+        case Symbol::print_p: return "print_p";
+        case Symbol::term: return "term";
+        case Symbol::expr_p: return "expr_p";
+        case Symbol::prod: return "prod";
+        case Symbol::term_p: return "term_p";
+        case Symbol::factor: return "factor";
+        case Symbol::prod_p: return "prod_p";
+        case Symbol::func: return "func";
+        case Symbol::Eof: return "Eof";
+        case Symbol::assign: return "assign";
+        case Symbol::String: return "String";
+        case Symbol::Exp: return "Exp";
+        case Symbol::FORWARD_SLASH: return "FORWARD_SLASH";
+        case Symbol::Number: return "Number";
+        case Symbol::ASTERISK: return "ASTERISK";
+        case Symbol::COMMA: return "COMMA";
+        case Symbol::OPEN_PARENTHESIS: return "OPEN_PARENTHESIS";
+        case Symbol::PLUS: return "PLUS";
+        case Symbol::CLOSE_PARENTHESIS: return "CLOSE_PARENTHESIS";
+        case Symbol::MINUS: return "MINUS";
+        case Symbol::PERCENT: return "PERCENT";
+        case Symbol::Ident: return "Identifier";
+        case Symbol::EQUAL: return "Equal";
+        case Symbol::KwInput: return "Input";
+        case Symbol::KwPrint: return "Print";
+        case Symbol::Epsilon: return "Epsilon";
+        case Symbol::KwFor: return "For";
+        case Symbol::KwIn: return "In";
+        case Symbol::KwIf: return "If";
+        case Symbol::KwElse: return "Else";
+        case Symbol::Indent: return "Indent";
+        case Symbol::Dedent: return "Dedent";
+        case Symbol::NewLine: return "NewLine";
+        case Symbol::KwWhile: return "While";
+        case Symbol::KwDef: return "Def";
+        case Symbol::KwReturn: return "Return";
+        default: return "Unknown";
+    }
+}

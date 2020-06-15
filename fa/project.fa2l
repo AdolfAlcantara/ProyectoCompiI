@@ -1,38 +1,23 @@
 #include "ProjectLexer.h"
+#include "ggrammar.h"
 
 /*!fa2lexer
 
-    %option generate.tokens = true;
+    %option generate.tokens = false;
 
     %file "start.jff";
     %file "decimal.jff";
     %file "ident.jff";
-    %file "delimeter.jff";
+    %file "delimeter_prov.jff";
+    %file "relational_prov.jff";
     %file "arimetical.jff";
     %file "comments.jff";
-    %file "relational.jff";
     %file "string.jff";
-
-    %token.descriptions {
-        Ident = "Identifier",
-        KwPrint = "print",
-        KwFor = "for",
-        KwIn = "in",
-        KwIf = "if",
-        KwElse = "else",
-        KwWhile = "while",
-        KwInput = "input",
-        KwDef = "def",
-        KwReturn = "return",
-        Indent = "indent",
-        Dedent = "dedent",
-        NewLine = "new_line"
-    }
 
     %generate.state_enum(State);
 */
 
-Token ProjectLexer::checkIndent(const std::string& str){
+Symbol ProjectLexer::checkIndent(const std::string& str){
     int _spaces = str.length();
     std::cout<<"spaces entrando:" << _spaces << "\n";
     std::cout<<"pila de espacios:" << spaces.size() << "\n";
@@ -43,56 +28,56 @@ Token ProjectLexer::checkIndent(const std::string& str){
     if(_spaces > spaces.back()){
         spaces.push_back(_spaces);
         std::cout<<"Push:" << _spaces << "\n\n";
-        return Token::Indent;
+        return Symbol::Indent;
     }else if(_spaces < spaces.back()){
             while(_spaces != spaces.back()){
-                indentTokens.push_back(Token::Dedent);
+                indentSymbols.push_back(Symbol::Dedent);
                 std::cout<<"Pop:" << spaces.back() << "\n\n";
                 spaces.pop_back();
             }
-            std::cout<<"indentTokens size: "<< indentTokens.size() << "\n";
-            Token temp = indentTokens.back();
-            temp = indentTokens.back();
-            indentTokens.pop_back();
+            std::cout<<"indentSymbols size: "<< indentSymbols.size() << "\n";
+            Symbol temp = indentSymbols.back();
+            temp = indentSymbols.back();
+            indentSymbols.pop_back();
             return temp;
     }else{
-        return Token::NewLine;
+        return Symbol::NewLine;
     }
 }
 
 
 
-Token ProjectLexer::findKeyword(const std::string& str){
+Symbol ProjectLexer::findKeyword(const std::string& str){
     if(str == "print"){
-        return Token::KwPrint;
+        return Symbol::KwPrint;
     }else if(str == "for"){
-        return Token::KwFor;
+        return Symbol::KwFor;
     }else if(str == "in"){
-        return Token::KwIn;
+        return Symbol::KwIn;
     }else if(str == "if"){
-        return Token::KwIf;
+        return Symbol::KwIf;
     }else if(str == "else"){
-        return Token::KwElse;
+        return Symbol::KwElse;
     }else if(str == "while"){
-        return Token::KwWhile;
+        return Symbol::KwWhile;
     }else if(str == "input"){
-        return Token::KwInput;
+        return Symbol::KwInput;
     }else if(str == "def"){
-        return Token::KwDef;
+        return Symbol::KwDef;
     }else if(str == "return"){
-        return Token::KwReturn;
+        return Symbol::KwReturn;
     }else{
-        return Token::Ident;
+        return Symbol::Ident;
     }
 }
 
-Token ProjectLexer::getNextToken()
+Symbol ProjectLexer::getNextSymbol()
 {
     text = "";
-    //std::cout<<"indentTokens size: "<< indentTokens.size() << "\n";
-    if(indentTokens.size() > 0){
-        Token temp = indentTokens.back();
-        indentTokens.pop_back();
+    //std::cout<<"indentSymbols size: "<< indentSymbols.size() << "\n";
+    if(indentSymbols.size() > 0){
+        Symbol temp = indentSymbols.back();
+        indentSymbols.pop_back();
         return temp;
     }
 
@@ -102,7 +87,7 @@ Token ProjectLexer::getNextToken()
     */
 }
 
-const char *ProjectLexer::tokenToString(Token tk)
+const char *ProjectLexer::SymbolToString(Symbol tk)
 {
     /*!fa2lexer
     %generate.toString(tk);

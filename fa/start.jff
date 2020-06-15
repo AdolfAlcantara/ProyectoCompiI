@@ -10,16 +10,16 @@
 		<state id="1" name="q1">
 			<x>114.0</x>
 			<y>298.0</y>
-			<label>Token::Eof</label>
+			<label>Symbol::Eof</label>
 			<final/>
 		</state>
 		<state id="2" name="q2">
-			<x>358.0</x>
-			<y>156.0</y>
+			<x>438.0</x>
+			<y>204.0</y>
 		</state>
 		<state id="3" name="q3">
-			<x>538.0</x>
-			<y>158.0</y>
+			<x>657.0</x>
+			<y>241.0</y>
 		</state>
 		<state id="4" name="q4">
 			<x>647.0</x>
@@ -27,8 +27,8 @@
 			<label>return checkIndent(text);</label>
 		</state>
 		<state id="5" name="q5">
-			<x>341.0</x>
-			<y>354.0</y>
+			<x>365.0</x>
+			<y>415.0</y>
 			<label>text=""</label>
 		</state>
 		<!--The list of transitions.-->
@@ -43,19 +43,14 @@
 			<read>TAB</read>
 		</transition>
 		<transition>
-			<from>5</from>
-			<to>0</to>
-			<read>-EOL</read>
-		</transition>
-		<transition>
-			<from>2</from>
-			<to>5</to>
-			<read>-#</read>
-		</transition>
-		<transition>
 			<from>2</from>
 			<to>3</to>
 			<read>SPACE</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>5</to>
+			<read>-#</read>
 		</transition>
 		<transition>
 			<from>2</from>
@@ -63,14 +58,19 @@
 			<read/>
 		</transition>
 		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>EOF</read>
+		</transition>
+		<transition>
 			<from>3</from>
 			<to>3</to>
 			<read>SPACE</read>
 		</transition>
 		<transition>
-			<from>0</from>
-			<to>1</to>
-			<read>EOF</read>
+			<from>2</from>
+			<to>5</to>
+			<read>-#</read>
 		</transition>
 		<transition>
 			<from>3</from>
@@ -84,23 +84,23 @@
 		</transition>
 		<transition>
 			<from>0</from>
-			<to>2</to>
-			<read>-EOL</read>
-		</transition>
-		<transition>
-			<from>3</from>
-			<to>5</to>
-			<read>-#</read>
-		</transition>
-		<transition>
-			<from>0</from>
 			<to>0</to>
 			<read>-SPACE</read>
 		</transition>
 		<transition>
 			<from>5</from>
+			<to>0</to>
+			<read>-EOL</read>
+		</transition>
+		<transition>
+			<from>5</from>
 			<to>5</to>
 			<read>-Other</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>-EOL</read>
 		</transition>
 		<transition>
 			<from>0</from>

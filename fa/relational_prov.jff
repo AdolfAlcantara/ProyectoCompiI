@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>
+	<type>fa</type>
+	<automaton>
+		<!--The list of states.-->
+		<state id="0" name="q0">
+			<x>63.0</x>
+			<y>221.0</y>
+			<initial/>
+		</state>
+		<state id="3" name="q3">
+			<x>272.0</x>
+			<y>385.0</y>
+			<label>Symbol::EQUAL</label>
+			<final/>
+		</state>
+		<!--The list of transitions.-->
+		<transition>
+			<from>0</from>
+			<to>3</to>
+			<read>=</read>
+		</transition>
+		<note>
+			<text>Name: Relational</text>
+			<x>67.0</x>
+			<y>36.0</y>
+		</note>
+	</automaton>
+</structure>

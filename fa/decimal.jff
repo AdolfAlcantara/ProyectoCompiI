@@ -14,7 +14,7 @@
 		<state id="2" name="q2">
 			<x>475.0</x>
 			<y>217.0</y>
-			<label>Token::Decimal</label>
+			<label>Symbol::Number</label>
 			<final/>
 		</state>
 		<!--The list of transitions.-->
