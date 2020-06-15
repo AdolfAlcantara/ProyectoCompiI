@@ -9,7 +9,9 @@ stmt_p -> assign
 stmt_p -> print 
 stmt_p -> '' 
 
-print -> KwPrint String , expr print_p
+print -> KwPrint String print_a
+print_a -> , expr print_p
+print_a -> ''
 print_p -> , String , expr print_p
 print_p -> ''
 

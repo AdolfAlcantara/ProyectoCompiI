@@ -345,6 +345,7 @@ const char *ProjectLexer::SymbolToString(Symbol tk)
         case Symbol::stmt_list_p: return "stmt_list_p";
         case Symbol::stmt_p: return "stmt_p";
         case Symbol::print: return "print";
+        case Symbol::print_a: return "print_a";
         case Symbol::expr: return "expr";
         case Symbol::print_p: return "print_p";
         case Symbol::term: return "term";

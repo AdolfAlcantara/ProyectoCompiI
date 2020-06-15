@@ -11,42 +11,43 @@ enum class Symbol: unsigned {
     stmt_p = 4,
     assign = 5,
     print = 6,
-    expr = 7,
-    print_p = 8,
-    term = 9,
-    expr_p = 10,
-    prod = 11,
-    term_p = 12,
-    factor = 13,
-    prod_p = 14,
-    func = 15,
-    Eof = 16,
-    NewLine = 17,
-    KwPrint = 18,
-    String = 19,
-    COMMA = 20,
-    Ident = 21,
-    EQUAL = 22,
-    PLUS = 23,
-    MINUS = 24,
-    ASTERISK = 25,
-    FORWARD_SLASH = 26,
-    PERCENT = 27,
-    Exp = 28,
-    Number = 29,
-    OPEN_PARENTHESIS = 30,
-    CLOSE_PARENTHESIS = 31,
-    KwInput = 32,
-    Epsilon = 33,
-    KwFor = 34,
-    KwIn = 35,
-    KwIf = 36,
-    KwElse = 37,
-    KwWhile = 38,
-    KwDef = 39,
-    KwReturn = 40,
-    Indent = 41,
-    Dedent = 42
+    print_a = 7,
+    expr = 8,
+    print_p = 9,
+    term = 10,
+    expr_p = 11,
+    prod = 12,
+    term_p = 13,
+    factor = 14,
+    prod_p = 15,
+    func = 16,
+    Eof = 17,
+    NewLine = 18,
+    KwPrint = 19,
+    String = 20,
+    COMMA = 21,
+    Ident = 22,
+    EQUAL = 23,
+    PLUS = 24,
+    MINUS = 25,
+    ASTERISK = 26,
+    FORWARD_SLASH = 27,
+    PERCENT = 28,
+    Exp = 29,
+    Number = 30,
+    OPEN_PARENTHESIS = 31,
+    CLOSE_PARENTHESIS = 32,
+    KwInput = 33,
+    Epsilon = 34,
+    KwFor = 35,
+    KwIn = 36,
+    KwIf = 37,
+    KwElse = 38,
+    KwWhile = 39,
+    KwDef = 40,
+    KwReturn = 41,
+    Indent = 42,
+    Dedent = 43
 };
 
 struct Rule {
@@ -62,12 +63,12 @@ using RuleRef = std::reference_wrapper<Rule>;
 
 static inline unsigned indexOf(Symbol s) {
     unsigned index = static_cast<unsigned>(s);
-    if (index < 16) return index;
-    else return (index - 16);
+    if (index < 17) return index;
+    else return (index - 17);
 }
 
 static inline bool isTerminal(Symbol s) {
-    return static_cast<unsigned>(s) >= 16;
+    return static_cast<unsigned>(s) >= 17;
 }
 
 const Rule& getEntry(Symbol non_term, Symbol term);
