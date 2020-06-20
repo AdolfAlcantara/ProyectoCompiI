@@ -9,7 +9,7 @@
     %file "decimal.jff";
     %file "ident.jff";
     %file "delimeter_prov.jff";
-    %file "relational_prov.jff";
+    %file "relational.jff";
     %file "arimetical.jff";
     %file "comments.jff";
     %file "string.jff";
@@ -56,6 +56,8 @@ Symbol ProjectLexer::findKeyword(const std::string& str){
         return Symbol::KwIn;
     }else if(str == "if"){
         return Symbol::KwIf;
+    }else if(str == "elif"){
+        return Symbol::KwElif;
     }else if(str == "else"){
         return Symbol::KwElse;
     }else if(str == "while"){

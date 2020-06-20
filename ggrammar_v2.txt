@@ -8,9 +8,27 @@ stmt_list_p -> ''
 stmt -> assign stmt_end_nl
 stmt -> print stmt_end_nl
 stmt -> for_st Dedent
+stmt -> if_st 
+stmt -> while_st
 
 stmt_end_nl -> NewLine
 stmt_end_nl -> ''
+
+while_st -> KwWhile expr : Indent stmt_list while_opt
+while_opt -> Eof
+while_opt -> Dedent
+
+
+if_st -> KwIf expr : Indent stmt_list if_opt
+
+if_opt -> Eof
+if_opt -> Dedent if_opt_p
+if_opt_p -> ''
+if_opt_p -> KwElse : Indent stmt_list if_opt_pp
+if_opt_p -> KwElif expr : Indent stmt_list if_opt
+if_opt_pp -> Eof
+if_opt_pp -> Dedent
+
 
 for_st -> KwFor Ident KwIn Ident for_opt
 for_opt -> ( arg_list ) : Indent stmt_list
@@ -34,6 +52,12 @@ assign -> Ident = expr
 expr -> term expr_p
 expr_p -> + term expr_p
 expr_p -> - term expr_p
+expr_p -> Sameas term expr_p
+expr_p -> LessOrEqual term expr_p
+expr_p -> LessThan term expr_p
+expr_p -> GreaterOrEqual term expr_p
+expr_p -> GreaterThan term expr_p
+expr_p -> Different term expr_p
 expr_p -> ''
 
 term -> prod term_p
@@ -47,7 +71,7 @@ prod_p -> Exp factor prod_p
 prod_p -> ''
 
 factor -> Ident
-factor -> Number
+factor -> Number 
 factor -> ( expr )
 factor -> func
 

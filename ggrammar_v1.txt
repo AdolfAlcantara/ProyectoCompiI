@@ -2,15 +2,48 @@ single_input -> stmt_list Eof
 single_input -> NewLine stmt_list Eof
 
 stmt_list -> stmt stmt_list_p
+stmt_list -> func_decl stmt_list_p
 stmt_list_p -> stmt stmt_list_p
+stmt_list_p -> func_decl stmt_list_p
 stmt_list_p -> ''
 
-stmt -> assign stmt_end_nl
+func_decl -> KwDef Ident ( arg_list ) : Indent stmt_list Dedent
+
+stmt -> Ident stmt_p
+stmt_p -> assign stmt_end_nl
+stmt_p -> func stmt_end_nl
+stmt_p -> arr_st stmt_end_nl
 stmt -> print stmt_end_nl
 stmt -> for_st Dedent
+stmt -> if_st 
+stmt -> while_st
+stmt -> return_st stmt_end_nl
 
 stmt_end_nl -> NewLine
 stmt_end_nl -> ''
+
+assign -> = expr
+func -> ( arg_list )
+arr_st -> [ expr ] = expr
+
+return_st -> KwReturn expr
+
+
+while_st -> KwWhile expr : Indent stmt_list while_opt
+while_opt -> Eof
+while_opt -> Dedent
+
+
+if_st -> KwIf expr : Indent stmt_list if_opt
+
+if_opt -> Eof
+if_opt -> Dedent if_opt_p
+if_opt_p -> ''
+if_opt_p -> KwElse : Indent stmt_list if_opt_pp
+if_opt_p -> KwElif expr : Indent stmt_list if_opt
+if_opt_pp -> Eof
+if_opt_pp -> Dedent
+
 
 for_st -> KwFor Ident KwIn Ident for_opt
 for_opt -> ( arg_list ) : Indent stmt_list
@@ -19,21 +52,25 @@ arg_list -> arg arg_list_p
 arg_list_p -> , arg  arg_list_p
 arg_list_p -> ''
 
-arg -> Ident
-arg -> Number
-arg -> ''
+arg -> expr
 
-print -> KwPrint String print_a
+print -> KwPrint print_b
+print_b -> expr print_a
+print_b -> String print_a
 print_a -> , expr print_p
 print_a -> ''
 print_p -> , String , expr print_p
 print_p -> ''
 
-assign -> Ident = expr
-
 expr -> term expr_p
 expr_p -> + term expr_p
 expr_p -> - term expr_p
+expr_p -> Sameas term expr_p
+expr_p -> LessOrEqual term expr_p
+expr_p -> LessThan term expr_p
+expr_p -> GreaterOrEqual term expr_p
+expr_p -> GreaterThan term expr_p
+expr_p -> Different term expr_p
 expr_p -> ''
 
 term -> prod term_p
@@ -46,9 +83,18 @@ prod_p -> % factor prod_p
 prod_p -> Exp factor prod_p
 prod_p -> ''
 
-factor -> Ident
-factor -> Number
+factor -> Ident factor_p
+factor -> Number 
 factor -> ( expr )
-factor -> func
+factor -> [ factor_pp ]
+factor -> KwInput ( String )
 
-func -> KwInput ( String )
+factor_p -> ( arg_list )
+factor_p -> [ expr ]
+factor_p -> ''
+
+factor_pp -> Number factor_ppp
+factor_pp -> ''
+factor_ppp -> , Number factor_ppp
+factor_ppp -> ''
+

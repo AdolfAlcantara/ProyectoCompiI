@@ -14,6 +14,10 @@ enum class State {
     Identifier_q2,
     Delimeter_q0,
     Relational_q0,
+    Relational_q1,
+    Relational_q2,
+    Relational_q3,
+    Relational_q4,
     Arimetical_q0,
     Arimetical_q3,
     Comments_q0,
@@ -62,6 +66,8 @@ Symbol ProjectLexer::findKeyword(const std::string& str){
         return Symbol::KwIn;
     }else if(str == "if"){
         return Symbol::KwIf;
+    }else if(str == "elif"){
+        return Symbol::KwElif;
     }else if(str == "else"){
         return Symbol::KwElse;
     }else if(str == "while"){
@@ -204,7 +210,19 @@ Symbol ProjectLexer::getNextSymbol()
                 break;
             // Delimeter
             case State::Delimeter_q0:
-                if (ch == ')') {
+                if (ch == ':') {
+                    text += ch;
+                    return Symbol::COLON;
+                }
+                else if (ch == ']') {
+                    text += ch;
+                    return Symbol::CLOSE_BRACKET;
+                }
+                else if (ch == '[') {
+                    text += ch;
+                    return Symbol::OPEN_BRACKET;
+                }
+                else if (ch == ')') {
                     text += ch;
                     return Symbol::CLOSE_PARENTHESIS;
                 }
@@ -216,10 +234,6 @@ Symbol ProjectLexer::getNextSymbol()
                     text += ch;
                     return Symbol::OPEN_PARENTHESIS;
                 }
-                else if (ch == ':') {
-                    text += ch;
-                    return Symbol::COLON;
-                }
                 else {
                     // Trying next automaton 'Relational
                     state = State::Relational_q0;
@@ -227,9 +241,65 @@ Symbol ProjectLexer::getNextSymbol()
                 break;
             // Relational
             case State::Relational_q0:
+                if (ch == '<') {
+                    text += ch;
+                    state = State::Relational_q2;
+                    ch = getNextChar();
+                }
+                else if (ch == '=') {
+                    text += ch;
+                    state = State::Relational_q3;
+                    ch = getNextChar();
+                }
+                else if (ch == '!') {
+                    text += ch;
+                    state = State::Relational_q4;
+                    ch = getNextChar();
+                }
+                else if (ch == '>') {
+                    text += ch;
+                    state = State::Relational_q1;
+                    ch = getNextChar();
+                }
+                else {
+                    // Trying next automaton 'Arimetical
+                    state = State::Arimetical_q0;
+                }
+                break;
+            case State::Relational_q1:
                 if (ch == '=') {
                     text += ch;
+                    return Symbol::GreaterOrEqual;
+                }
+                else {
+                    ungetChar(ch);
+                    return Symbol::GreaterThan;
+                }
+                break;
+            case State::Relational_q2:
+                if (ch == '=') {
+                    text += ch;
+                    return Symbol::LessOrEqual;
+                }
+                else {
+                    ungetChar(ch);
+                    return Symbol::LessThan;
+                }
+                break;
+            case State::Relational_q3:
+                if (ch == '=') {
+                    text += ch;
+                    return Symbol::Sameas;
+                }
+                else {
+                    ungetChar(ch);
                     return Symbol::EQUAL;
+                }
+                break;
+            case State::Relational_q4:
+                if (ch == '=') {
+                    text += ch;
+                    return Symbol::Different;
                 }
                 else {
                     // Trying next automaton 'Arimetical
@@ -343,19 +413,28 @@ Symbol ProjectLexer::getNextSymbol()
 const char *ProjectLexer::SymbolToString(Symbol tk)
 {
         switch (tk) {
+            case Symbol::while_st: return "while_st";
+            case Symbol::while_opt : return "while_opt";
             case Symbol::single_input: return "single_input";
             case Symbol::stmt_list: return "stmt_list";
             case Symbol::stmt: return "stmt";
+            case Symbol::stmt_p: return "stmt_p";
+            case Symbol::func: return "func";
             case Symbol::stmt_list_p: return "stmt_list_p";
             case Symbol::assign: return "assign";
             case Symbol::stmt_end_nl: return "stmt_end_nl";
             case Symbol::print: return "print";
             case Symbol::for_st: return "for_st";
             case Symbol::for_opt: return "for_opt";
+            case Symbol::if_st: return "if_st";
+            case Symbol::if_opt: return "if_opt";
+            case Symbol::if_opt_p: return "if_opt_p";
+            case Symbol::if_opt_pp: return "if_opt_pp";
             case Symbol::arg_list: return "arg_list";
             case Symbol::arg: return "arg";
             case Symbol::arg_list_p: return "arg_list_p";
             case Symbol::print_a: return "print_a";
+            case Symbol::print_b: return "print_b";
             case Symbol::expr: return "expr";
             case Symbol::print_p: return "print_p";
             case Symbol::term: return "term";
@@ -363,8 +442,12 @@ const char *ProjectLexer::SymbolToString(Symbol tk)
             case Symbol::prod: return "prod";
             case Symbol::term_p: return "term_p";
             case Symbol::factor: return "factor";
+            case Symbol::factor_p: return "factor_p";
+            case Symbol::factor_pp: return "factor_pp";
+            case Symbol::factor_ppp: return "factor_ppp";
             case Symbol::prod_p: return "prod_p";
-            case Symbol::func: return "func";
+            case Symbol::func_decl: return "func_decl";
+            case Symbol::return_st:return "return_st";
             case Symbol::Eof: return "Eof";
             case Symbol::NewLine: return "NewLine";
             case Symbol::Indent: return "Indent";
@@ -374,6 +457,8 @@ const char *ProjectLexer::SymbolToString(Symbol tk)
             case Symbol::KwIn: return "KwIn";
             case Symbol::OPEN_PARENTHESIS: return "OPEN_PARENTHESIS";
             case Symbol::CLOSE_PARENTHESIS: return "CLOSE_PARENTHESIS";
+            case Symbol::OPEN_BRACKET: return "OPEN_BRACES";
+            case Symbol::CLOSE_BRACKET: return "CLOSE_BRACKET";
             case Symbol::COLON: return "COLON";
             case Symbol::COMMA: return "COMMA";
             case Symbol::Number: return "Number";
@@ -385,11 +470,18 @@ const char *ProjectLexer::SymbolToString(Symbol tk)
             case Symbol::ASTERISK: return "ASTERISK";
             case Symbol::FORWARD_SLASH: return "FORWARD_SLASH";
             case Symbol::PERCENT: return "PERCENT";
+            case Symbol::Sameas: return "Sameas";
             case Symbol::Exp: return "Exp";
             case Symbol::KwInput: return "KwInput";
             case Symbol::Epsilon: return "Epsilon";
             case Symbol::KwIf: return "KwIf";
+            case Symbol::KwElif: return "KwElif";
             case Symbol::KwElse: return "KwElse";
+            case Symbol::LessOrEqual: return "LessOrEqual";
+            case Symbol::LessThan: return "LessThan";
+            case Symbol::GreaterOrEqual: return "GreaterOrEqual";
+            case Symbol::GreaterThan: return "GreaterThan";
+            case Symbol::Different: return "Different";
             case Symbol::KwWhile: return "KwWhile";
             case Symbol::KwDef: return "KwDef";
             case Symbol::KwReturn: return "KwReturn";

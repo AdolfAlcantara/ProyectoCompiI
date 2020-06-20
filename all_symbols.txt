@@ -3,116 +3,98 @@ enum class Symbol: unsigned {
     stmt_list = 1,
     stmt = 2,
     stmt_list_p = 3,
-    stmt_p = 4,
-    assign = 5,
-    print = 6,
-    expr = 7,
-    print_p = 8,
-    term = 9,
-    expr_p = 10,
-    prod = 11,
-    term_p = 12,
-    factor = 13,
-    prod_p = 14,
-    func = 15,
-    Eof = 16,
-    NewLine = 17,
-    KwPrint = 18,
-    String = 19,
-    COMMA = 20,
-    Ident = 21,
-    EQUAL = 22,
-    PLUS = 23,
-    MINUS = 24,
-    ASTERISK = 25,
-    FORWARD_SLASH = 26,
-    PERCENT = 27,
-    Exp = 28,
-    Number = 29,
-    OPEN_PARENTHESIS = 30,
-    CLOSE_PARENTHESIS = 31,
-    KwInput = 32,
-    Epsilon = 33,
-    KwFor = 34,
-    KwIn = 35,
-    KwIf = 36,
-    KwElse = 37,
-    KwWhile = 38,
-    KwDef = 39,
-    KwReturn = 40,
-    Indent = 41,
-    Dedent = 42
-};
-
-enum class Symbol: unsigned {
-    single_input = 0,
-    stmt_list = 1,
-    stmt = 2,
-    stmt_list_p = 3,
-    stmt_p = 4,
-    assign = 5,
-    print = 6,
-    for_st = 7,
-    for_opt = 8,
-    arg_list = 9,
-    arg = 10,
-    arg_list_p = 11,
-    print_a = 12,
+    func_decl = 4,
+    arg_list = 5,
+    assign = 6,
+    stmt_end_nl = 7,
+    print = 8,
+    for_st = 9,
+    if_st = 10,
+    while_st = 11,
+    return_st = 12,
     expr = 13,
-    print_p = 14,
-    term = 15,
-    expr_p = 16,
-    prod = 17,
-    term_p = 18,
-    factor = 19,
-    prod_p = 20,
-    func = 21,
-    Eof = 22,
-    NewLine = 23,
-    Indent = 24,
-    Dedent = 25,
-    KwFor = 26,
-    Ident = 27,
-    KwIn = 28,
-    OPEN_PARENTHESIS = 29,
-    CLOSE_PARENTHESIS = 30,
-    COLON = 31,
-    COMMA = 32,
-    Number = 33,
-    KwPrint = 34,
-    String = 35,
-    EQUAL = 36,
-    PLUS = 37,
-    MINUS = 38,
-    ASTERISK = 39,
-    FORWARD_SLASH = 40,
-    PERCENT = 41,
-    Exp = 42,
-    KwInput = 43,
-    Epsilon = 44,
-    KwIf = 45,
-    KwElse = 46,
-    KwWhile = 47,
-    KwDef = 48,
-    KwReturn = 49
+    while_opt = 14,
+    if_opt = 15,
+    if_opt_p = 16,
+    if_opt_pp = 17,
+    for_opt = 18,
+    arg = 19,
+    arg_list_p = 20,
+    print_a = 21,
+    print_p = 22,
+    term = 23,
+    expr_p = 24,
+    prod = 25,
+    term_p = 26,
+    factor = 27,
+    prod_p = 28,
+    factor_p = 29,
+    factor_pp = 30,
+    factor_ppp = 31,
+    Eof = 32,
+    NewLine = 33,
+    KwDef = 34,
+    Ident = 35,
+    OPEN_PARENTHESIS = 36,
+    CLOSE_PARENTHESIS = 37,
+    COLON = 38,
+    Indent = 39,
+    Dedent = 40,
+    KwReturn = 41,
+    KwWhile = 42,
+    KwIf = 43,
+    KwElse = 44,
+    KwElif = 45,
+    KwFor = 46,
+    KwIn = 47,
+    COMMA = 48,
+    KwPrint = 49,
+    String = 50,
+    EQUAL = 51,
+    PLUS = 52,
+    MINUS = 53,
+    Sameas = 54,
+    LessOrEqual = 55,
+    LessThan = 56,
+    GreaterOrEqual = 57,
+    GreaterThan = 58,
+    Different = 59,
+    ASTERISK = 60,
+    FORWARD_SLASH = 61,
+    PERCENT = 62,
+    Exp = 63,
+    Number = 64,
+    OPEN_BRACKET = 65,
+    CLOSE_BRACKET = 66,
+    KwInput = 67,
+    Epsilon = 68
 };
 
 const char *ProjectLexer::SymbolToString(Symbol tk)
 {
         switch (tk) {
+            case Symbol::while_st: return "while_st";
+            case Symbol::while_opt : return "while_opt";
             case Symbol::single_input: return "single_input";
             case Symbol::stmt_list: return "stmt_list";
             case Symbol::stmt: return "stmt";
-            case Symbol::stmt_list_p: return "stmt_list_p";
             case Symbol::stmt_p: return "stmt_p";
+            case Symbol::func: return "func";
+            case Symbol::stmt_list_p: return "stmt_list_p";
             case Symbol::assign: return "assign";
+            case Symbol::stmt_end_nl: return "stmt_end_nl";
             case Symbol::print: return "print";
             case Symbol::for_st: return "for_st";
             case Symbol::for_opt: return "for_opt";
+            case Symbol::if_st: return "if_st";
+            case Symbol::if_opt: return "if_opt";
+            case Symbol::if_opt_p: return "if_opt_p";
+            case Symbol::if_opt_pp: return "if_opt_pp";
             case Symbol::arg_list: return "arg_list";
             case Symbol::arg: return "arg";
             case Symbol::arg_list_p: return "arg_list_p";
             case Symbol::print_a: return "print_a";
+            case Symbol::print_b: return "print_b";
             case Symbol::expr: return "expr";
             case Symbol::print_p: return "print_p";
             case Symbol::term: return "term";
@@ -120,8 +102,12 @@ const char *ProjectLexer::SymbolToString(Symbol tk)
             case Symbol::prod: return "prod";
             case Symbol::term_p: return "term_p";
             case Symbol::factor: return "factor";
+            case Symbol::factor_p: return "factor_p";
+            case Symbol::factor_pp: return "factor_pp";
+            case Symbol::factor_ppp: return "factor_ppp";
             case Symbol::prod_p: return "prod_p";
-            case Symbol::func: return "func";
+            case Symbol::func_decl: return "func_decl";
+            case Symbol::return_st:return "return_st";
             case Symbol::Eof: return "Eof";
             case Symbol::NewLine: return "NewLine";
             case Symbol::Indent: return "Indent";
@@ -131,6 +117,8 @@ const char *ProjectLexer::SymbolToString(Symbol tk)
             case Symbol::KwIn: return "KwIn";
             case Symbol::OPEN_PARENTHESIS: return "OPEN_PARENTHESIS";
             case Symbol::CLOSE_PARENTHESIS: return "CLOSE_PARENTHESIS";
+            case Symbol::OPEN_BRACKET: return "OPEN_BRACES";
+            case Symbol::CLOSE_BRACKET: return "CLOSE_BRACKET";
             case Symbol::COLON: return "COLON";
             case Symbol::COMMA: return "COMMA";
             case Symbol::Number: return "Number";
@@ -142,11 +130,18 @@ const char *ProjectLexer::SymbolToString(Symbol tk)
             case Symbol::ASTERISK: return "ASTERISK";
             case Symbol::FORWARD_SLASH: return "FORWARD_SLASH";
             case Symbol::PERCENT: return "PERCENT";
+            case Symbol::Sameas: return "Sameas";
             case Symbol::Exp: return "Exp";
             case Symbol::KwInput: return "KwInput";
             case Symbol::Epsilon: return "Epsilon";
             case Symbol::KwIf: return "KwIf";
+            case Symbol::KwElif: return "KwElif";
             case Symbol::KwElse: return "KwElse";
+            case Symbol::LessOrEqual: return "LessOrEqual";
+            case Symbol::LessThan: return "LessThan";
+            case Symbol::GreaterOrEqual: return "GreaterOrEqual";
+            case Symbol::GreaterThan: return "GreaterThan";
+            case Symbol::Different: return "Different";
             case Symbol::KwWhile: return "KwWhile";
             case Symbol::KwDef: return "KwDef";
             case Symbol::KwReturn: return "KwReturn";
