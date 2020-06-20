@@ -6,22 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../ProjectLexer.h
-iostream
--
-string
--
-fstream
--
-vector
--
-ggrammar.h
-../ggrammar.h
-
-../ggrammar.h
-vector
--
-
 /home/deafdead/Documentos/compi/Proyecto/ProjectLexer.h
 iostream
 -
@@ -43,12 +27,6 @@ ggrammar.cpp
 /home/deafdead/Documentos/compi/Proyecto/ProjectParser.h
 ProjectLexer.h
 /home/deafdead/Documentos/compi/Proyecto/ProjectLexer.h
-
-/home/deafdead/Documentos/compi/Proyecto/build/ProjectLexer.cpp
-ProjectLexer.h
-/home/deafdead/Documentos/compi/Proyecto/build/ProjectLexer.h
-ggrammar.h
-/home/deafdead/Documentos/compi/Proyecto/build/ggrammar.h
 
 /home/deafdead/Documentos/compi/Proyecto/ggrammar.cpp
 vector

@@ -18,8 +18,9 @@ bool ProjectParser::parse()
                 data_pile.pop_back();
                 curr_symbol = lexer.getNextSymbol();
             }else{
-                std::cerr<<"Found NOnterminal "<<lexer.SymbolToString(firstElement)<<"\n";
+                std::cerr<<"Found Nonterminal "<<lexer.SymbolToString(firstElement)<<"\n";
                 std::cerr<<"Found terminal "<<lexer.SymbolToString(curr_symbol)<<"\n";
+                std::cerr<<"Expected token: "<< lexer.SymbolToString(firstElement) <<" but expected token: "<<lexer.SymbolToString(curr_symbol)<<"\n";
                 std::cerr<<"Bad Parse\n";
                 throw std::exception();
             }
@@ -27,6 +28,7 @@ bool ProjectParser::parse()
             const Rule& prod = getEntry(firstElement,curr_symbol);
             if(prod.isEmpty()){
                 std::cout<<"Error, produccion vacia\n";
+                std::cerr<<"Expected token: "<< lexer.SymbolToString(firstElement) <<" but expected token: "<<lexer.SymbolToString(curr_symbol)<<"\n";
                 std::cerr<<"Bad Parse\n";
                 throw std::exception();
             }

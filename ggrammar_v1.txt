@@ -1,13 +1,27 @@
-single_input -> stmt_list
+single_input -> stmt_list Eof
+single_input -> NewLine stmt_list Eof
 
 stmt_list -> stmt stmt_list_p
 stmt_list_p -> stmt stmt_list_p
 stmt_list_p -> ''
 
-stmt -> NewLine stmt_p
-stmt_p -> assign
-stmt_p -> print 
-stmt_p -> '' 
+stmt -> assign stmt_end_nl
+stmt -> print stmt_end_nl
+stmt -> for_st Dedent
+
+stmt_end_nl -> NewLine
+stmt_end_nl -> ''
+
+for_st -> KwFor Ident KwIn Ident for_opt
+for_opt -> ( arg_list ) : Indent stmt_list
+
+arg_list -> arg arg_list_p
+arg_list_p -> , arg  arg_list_p
+arg_list_p -> ''
+
+arg -> Ident
+arg -> Number
+arg -> ''
 
 print -> KwPrint String print_a
 print_a -> , expr print_p

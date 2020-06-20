@@ -7,6 +7,12 @@
 			<y>226.0</y>
 			<initial/>
 		</state>
+		<state id="1" name="q1">
+			<x>630.0</x>
+			<y>340.0</y>
+			<label>Symbol::COLON</label>
+			<final/>
+		</state>
 		<state id="2" name="q2">
 			<x>613.0</x>
 			<y>18.0</y>
@@ -28,11 +34,6 @@
 		<!--The list of transitions.-->
 		<transition>
 			<from>0</from>
-			<to>2</to>
-			<read>(</read>
-		</transition>
-		<transition>
-			<from>0</from>
 			<to>3</to>
 			<read>)</read>
 		</transition>
@@ -41,10 +42,20 @@
 			<to>9</to>
 			<read>,</read>
 		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>(</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>:</read>
+		</transition>
 		<note>
 			<text>Name: Delimeter</text>
 			<x>72.0</x>
-			<y>56.0</y>
+			<y>58.0</y>
 		</note>
 	</automaton>
 </structure>

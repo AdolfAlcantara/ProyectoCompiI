@@ -204,17 +204,21 @@ Symbol ProjectLexer::getNextSymbol()
                 break;
             // Delimeter
             case State::Delimeter_q0:
-                if (ch == '(') {
-                    text += ch;
-                    return Symbol::OPEN_PARENTHESIS;
-                }
-                else if (ch == ')') {
+                if (ch == ')') {
                     text += ch;
                     return Symbol::CLOSE_PARENTHESIS;
                 }
                 else if (ch == ',') {
                     text += ch;
                     return Symbol::COMMA;
+                }
+                else if (ch == '(') {
+                    text += ch;
+                    return Symbol::OPEN_PARENTHESIS;
+                }
+                else if (ch == ':') {
+                    text += ch;
+                    return Symbol::COLON;
                 }
                 else {
                     // Trying next automaton 'Relational
@@ -339,50 +343,56 @@ Symbol ProjectLexer::getNextSymbol()
 const char *ProjectLexer::SymbolToString(Symbol tk)
 {
         switch (tk) {
-        case Symbol::single_input: return "single_input";
-        case Symbol::stmt_list: return "stmt_list";
-        case Symbol::stmt: return "stmt";
-        case Symbol::stmt_list_p: return "stmt_list_p";
-        case Symbol::stmt_p: return "stmt_p";
-        case Symbol::print: return "print";
-        case Symbol::print_a: return "print_a";
-        case Symbol::expr: return "expr";
-        case Symbol::print_p: return "print_p";
-        case Symbol::term: return "term";
-        case Symbol::expr_p: return "expr_p";
-        case Symbol::prod: return "prod";
-        case Symbol::term_p: return "term_p";
-        case Symbol::factor: return "factor";
-        case Symbol::prod_p: return "prod_p";
-        case Symbol::func: return "func";
-        case Symbol::Eof: return "Eof";
-        case Symbol::assign: return "assign";
-        case Symbol::String: return "String";
-        case Symbol::Exp: return "Exp";
-        case Symbol::FORWARD_SLASH: return "FORWARD_SLASH";
-        case Symbol::Number: return "Number";
-        case Symbol::ASTERISK: return "ASTERISK";
-        case Symbol::COMMA: return "COMMA";
-        case Symbol::OPEN_PARENTHESIS: return "OPEN_PARENTHESIS";
-        case Symbol::PLUS: return "PLUS";
-        case Symbol::CLOSE_PARENTHESIS: return "CLOSE_PARENTHESIS";
-        case Symbol::MINUS: return "MINUS";
-        case Symbol::PERCENT: return "PERCENT";
-        case Symbol::Ident: return "Identifier";
-        case Symbol::EQUAL: return "Equal";
-        case Symbol::KwInput: return "Input";
-        case Symbol::KwPrint: return "Print";
-        case Symbol::Epsilon: return "Epsilon";
-        case Symbol::KwFor: return "For";
-        case Symbol::KwIn: return "In";
-        case Symbol::KwIf: return "If";
-        case Symbol::KwElse: return "Else";
-        case Symbol::Indent: return "Indent";
-        case Symbol::Dedent: return "Dedent";
-        case Symbol::NewLine: return "NewLine";
-        case Symbol::KwWhile: return "While";
-        case Symbol::KwDef: return "Def";
-        case Symbol::KwReturn: return "Return";
+            case Symbol::single_input: return "single_input";
+            case Symbol::stmt_list: return "stmt_list";
+            case Symbol::stmt: return "stmt";
+            case Symbol::stmt_list_p: return "stmt_list_p";
+            case Symbol::assign: return "assign";
+            case Symbol::stmt_end_nl: return "stmt_end_nl";
+            case Symbol::print: return "print";
+            case Symbol::for_st: return "for_st";
+            case Symbol::for_opt: return "for_opt";
+            case Symbol::arg_list: return "arg_list";
+            case Symbol::arg: return "arg";
+            case Symbol::arg_list_p: return "arg_list_p";
+            case Symbol::print_a: return "print_a";
+            case Symbol::expr: return "expr";
+            case Symbol::print_p: return "print_p";
+            case Symbol::term: return "term";
+            case Symbol::expr_p: return "expr_p";
+            case Symbol::prod: return "prod";
+            case Symbol::term_p: return "term_p";
+            case Symbol::factor: return "factor";
+            case Symbol::prod_p: return "prod_p";
+            case Symbol::func: return "func";
+            case Symbol::Eof: return "Eof";
+            case Symbol::NewLine: return "NewLine";
+            case Symbol::Indent: return "Indent";
+            case Symbol::Dedent: return "Dedent";
+            case Symbol::KwFor: return "KwFor";
+            case Symbol::Ident: return "Ident";
+            case Symbol::KwIn: return "KwIn";
+            case Symbol::OPEN_PARENTHESIS: return "OPEN_PARENTHESIS";
+            case Symbol::CLOSE_PARENTHESIS: return "CLOSE_PARENTHESIS";
+            case Symbol::COLON: return "COLON";
+            case Symbol::COMMA: return "COMMA";
+            case Symbol::Number: return "Number";
+            case Symbol::KwPrint: return "KwPrint";
+            case Symbol::String: return "String";
+            case Symbol::EQUAL: return "EQUAL";
+            case Symbol::PLUS: return "PLUS";
+            case Symbol::MINUS: return "MINUS";
+            case Symbol::ASTERISK: return "ASTERISK";
+            case Symbol::FORWARD_SLASH: return "FORWARD_SLASH";
+            case Symbol::PERCENT: return "PERCENT";
+            case Symbol::Exp: return "Exp";
+            case Symbol::KwInput: return "KwInput";
+            case Symbol::Epsilon: return "Epsilon";
+            case Symbol::KwIf: return "KwIf";
+            case Symbol::KwElse: return "KwElse";
+            case Symbol::KwWhile: return "KwWhile";
+            case Symbol::KwDef: return "KwDef";
+            case Symbol::KwReturn: return "KwReturn";
         default: return "Unknown";
     }
 }
