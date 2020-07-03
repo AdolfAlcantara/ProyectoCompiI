@@ -1,3 +1,0 @@
-/home/deafdead/Documentos/compi/Proyecto/build/CMakeFiles/rebuild_cache.dir
-/home/deafdead/Documentos/compi/Proyecto/build/CMakeFiles/TinyPython.dir
-/home/deafdead/Documentos/compi/Proyecto/build/CMakeFiles/edit_cache.dir
