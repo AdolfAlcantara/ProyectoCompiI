@@ -1,4 +1,4 @@
-#include "ProjectParser.cpp"
+#include "parser.cpp"
 
 int main (int argc, char *argv[])
 {
@@ -14,7 +14,7 @@ int main (int argc, char *argv[])
     }
 
     ProjectLexer project_lexer(input);
-    ProjectParser parser(project_lexer);
+    Parser parser(project_lexer);
 
     // Symbol tk = project_lexer.getNextSymbol();
 

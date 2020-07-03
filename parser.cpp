@@ -7,89 +7,96 @@ void Parser::parse()
     //std::cout<<lexer.SymbolToString(curr_token)<<"\n";
     while(curr_token != Symbol::Eof)
     {
+        std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
         if(curr_token == Symbol::NewLine){
             curr_token = lexer.getNextSymbol();
         }else{
             stmt_list();
         }
     }
+    std::cout<<"Good parsing\n";
 }
 
 void Parser::stmt_list()
 {
-    switch (curr_token)
-    {
-        case Symbol::KwDef:
+    while(curr_token == Symbol::KwDef ||
+          curr_token == Symbol::Ident ||
+          curr_token == Symbol::KwPrint ||
+          curr_token == Symbol::KwFor ||
+          curr_token == Symbol::KwIf ||
+          curr_token == Symbol::KwWhile ||
+          curr_token == Symbol::KwReturn){
+        std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+        switch (curr_token)
         {
-            curr_token = lexer.getNextSymbol();
-            fun_decl();
-            break;
-        }
-        case Symbol::Ident:
-        {
-            curr_token = lexer.getNextSymbol();
-            switch(curr_token)
+            case Symbol::KwDef:
             {
-                case Symbol::EQUAL:
-                {
-                    curr_token = lexer.getNextSymbol();
-                    assign();
-                    break;
-                }
-                case Symbol::OPEN_PARENTHESIS:
-                {
-                    curr_token = lexer.getNextSymbol();
-                    func();
-                    break;
-                }
-                case Symbol::OPEN_BRACKET:
-                {
-                    curr_token = lexer.getNextSymbol();
-                    array();
-                    break;
-                }
-                default:
-                {
-                    std::cerr<<"UNexpected token: "<<lexer.SymbolToString(curr_token)<<"\n"; 
-                    break;
-                }
+                curr_token = lexer.getNextSymbol();
+                fun_decl();
+                break;
             }
-        }
-        case Symbol::KwPrint:
-        {
-            curr_token = lexer.getNextSymbol();
-            print();
-            break;
-        }
-        case Symbol::KwFor:
-        {
-            curr_token = lexer.getNextSymbol();
-            for_stmt();
-            break;
-        }
-        case Symbol::KwIf:
-        {
-            curr_token = lexer.getNextSymbol();
-            if_stmt();
-            break;
-        }
-        case Symbol::KwWhile:
-        {
-            curr_token = lexer.getNextSymbol();
-            while_stmt();
-            break;
-        }
-        case Symbol::KwReturn:
-        {
-            curr_token = lexer.getNextSymbol();
-            return_stmt();
-            break;
-        }
-        
-        default:
-        {
-            std::cerr<<"UNexpected token: "<<lexer.SymbolToString(curr_token)<<"\n"; 
-            break;
+            case Symbol::Ident:
+            {
+                curr_token = lexer.getNextSymbol();
+                std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+                switch(curr_token)
+                {
+                    case Symbol::EQUAL:
+                    {
+                        curr_token = lexer.getNextSymbol();
+                        assign();
+                        break;
+                    }
+                    case Symbol::OPEN_PARENTHESIS:
+                    {
+                        curr_token = lexer.getNextSymbol();
+                        func();
+                        break;
+                    }
+                    case Symbol::OPEN_BRACKET:
+                    {
+                        curr_token = lexer.getNextSymbol();
+                        array();
+                        break;
+                    }
+                    default:
+                    {
+                        std::cerr<<"UNexpected token: "<<lexer.SymbolToString(curr_token)<<"\n"; 
+                        break;
+                    }
+                }
+                break;
+            }
+            case Symbol::KwPrint:
+            {
+                curr_token = lexer.getNextSymbol();
+                print();
+                break;
+            }
+            case Symbol::KwFor:
+            {
+                curr_token = lexer.getNextSymbol();
+                for_stmt();
+                break;
+            }
+            case Symbol::KwIf:
+            {
+                curr_token = lexer.getNextSymbol();
+                if_stmt();
+                break;
+            }
+            case Symbol::KwWhile:
+            {
+                curr_token = lexer.getNextSymbol();
+                while_stmt();
+                break;
+            }
+            case Symbol::KwReturn:
+            {
+                curr_token = lexer.getNextSymbol();
+                return_stmt();
+                break;
+            }
         }
     }
 }
@@ -140,140 +147,423 @@ void Parser::fun_decl()
 void Parser::arg_list()
 {
     expr();
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
     while(curr_token == Symbol::COMMA){
         curr_token = lexer.getNextSymbol();
         expr();
     }
 }
 
-// void Parser::assign(){
-//     //std::cout<<"Assign\n";
-//     std::string text = lexer.getText();
-//     curr_token = lexer.getNextSymbol();
-//     if(curr_token == Symbol::EQUAL){
-//         curr_token = lexer.getNextSymbol();
-//         auto node1 = expr();
-//         // int value = expr();
-//         // auto i = value_map.emplace(ident,value);
-//         // if(!i.second){
-//         //     i.first->second = value;
-//         // }
-//         std::cout<<"Assign expr kind: "<<AST::kindToString(node1->getKind())<<"\n";
-//         return std::make_shared<AST::Assign>(text,node1);
-//     }else{
-//         std::cerr<<"Expected token Equal but found "<<lexer.SymbolToString(curr_token)<<"\n";
-//         throw std::exception();
-//     }
-// }
+void Parser::assign()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    expr();
+    if(curr_token == Symbol::NewLine)
+    {
+        curr_token = lexer.getNextSymbol();
+    }
+}
 
-// void Parser::print(){
-//     //std::cout<<"KwPrint\n";
-//     // if(curr_token == Symbol::Ident){
-//     //     //std::cout<<"Ident\n";
-//     //     //std::cout<<lexer.getText()<<"\n";
-//         // auto i = value_map.find(lexer.getText());
-//         // if(i == value_map.end()){
-//         //     std::cerr<<"Not value found for "<<lexer.getText()<<"\n";
-//         //     throw std::exception();
-//         // }
-//         // //std::cout<<lexer.getText()<<" = "<<i->second<<"\n";
-//         auto node = expr();
-//         // curr_token = lexer.getNextSymbol();
-//         return std::make_shared<AST::Print>(node);
-//     // }else{
-//     //     std::cerr<<"Expected token Ident but found "<<lexer.SymbolToString(curr_token)<<"\n";
-//     //     throw std::exception();
-//     // }
-// }
+void Parser::func()
+{
+    arg_list();
+    if(curr_token == Symbol::CLOSE_PARENTHESIS){
+        curr_token = lexer.getNextSymbol();
+    }else{
+        expectedToken(Symbol::CLOSE_PARENTHESIS,curr_token);
+    }
 
-// void Parser::expr(){
-//     // int value=0;
-//     //std::cout<<"Expr\n";
-//     // value = term();
-//     auto node1 = term();
-//     //std::cout<<lexer.SymbolToString(curr_token)<<"\n";
-//     while(curr_token == Symbol::PLUS || curr_token == Symbol::MINUS){
-//         if(curr_token == Symbol::PLUS){
-//             curr_token = lexer.getNextSymbol();
-//             // value = value + term();
-//             auto node2 = term();
-//             return std::make_shared<AST::Plus>(node1,node2);
-//         }else{
-//             curr_token = lexer.getNextSymbol();
-//             // value = value - term();
-//             auto node2 = term();
-//             return std::make_shared<AST::Minus>(node1,node2);
-//         }
-//     }
-//     // return value;
-//     return node1;
-// }
+    if(curr_token == Symbol::NewLine)
+    {
+        curr_token = lexer.getNextSymbol();
+    }
+}
 
-// AST::NodePtr Parser::term(){
-//     // int value=0;
-//     //std::cout<<"term\n";
-//     // value = factor();
-//     auto node1 = factor();
-//     //std::cout<<lexer.SymbolToString(curr_token)<<"\n";
-//     while(curr_token == Symbol::ASTERISK || curr_token == Symbol::FORWARD_SLASH){
-//         if(curr_token == Symbol::ASTERISK){
-//             curr_token = lexer.getNextSymbol();
-//             // value = value * factor();
-//             auto node2 = factor();
-//             std::cout<<"term expr1 kind: "<<AST::kindToString(node1->getKind())<<"\n";
-//             std::cout<<"term expr2 kind: "<<AST::kindToString(node2->getKind())<<"\n";
-//             return std::make_shared<AST::Mult>(node1,node2);
-//         }else{
-//             curr_token = lexer.getNextSymbol();
-//             // value = value / factor();
-//             auto node2 = factor();
-//             return std::make_shared<AST::Div>(node1,node2);
-//         }
-//     }
-//     return node1;
-//     // return value;
-// }
+void Parser::array()
+{
+    expr();
+    if(curr_token == Symbol::CLOSE_BRACKET){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::EQUAL){
+            curr_token = lexer.getNextSymbol();
+            assign();
+        }else{
+            expectedToken(Symbol::EQUAL, curr_token);
+        }
+    }else{
+        expectedToken(Symbol::CLOSE_BRACKET, curr_token);
+    }
+}
 
-// AST::NodePtr Parser::factor(){
-//     //std::cout<<"factor\n";
-//     //std::cout<<lexer.SymbolToString(curr_token)<<"\n";
-//     //std::cout<<lexer.getText()<<"\n";
-//     // int value=0;
-//     if(curr_token == Symbol::num){
-//         // value = std::stoi(lexer.getText());
-//         int value = std::stoi(lexer.getText());
-//         curr_token = lexer.getNextSymbol();
-//         return std::make_shared<AST::Numb>(value);
-//     }else if(curr_token == Symbol::OPEN_PARENTHESIS){
-//         curr_token = lexer.getNextSymbol();
-//         auto node = expr();
-//         // value = expr();
-//         if(curr_token != Symbol::CLOSE_PARENTHESIS){
-//             SyntaxError(curr_token);
-//             throw std::exception();
-//         }else{
-//             curr_token = lexer.getNextSymbol();
-//         }
-//         return node;
-//     }else if(curr_token == Symbol::Ident){
-//         // auto i = value_map.find(lexer.getText());
-//         // if(i == value_map.end()){
-//         //     std::cerr<<"Not value found for "<<lexer.getText()<<"\n";
-//         //     throw std::exception();
-//         // }
-//         auto text = lexer.getText();
-//         curr_token = lexer.getNextSymbol();
-//         return std::make_shared<AST::Ident>(text);
-//         // value = i->second;
-//     }else{
-//         SyntaxError(curr_token);
-//         throw std::exception();
-//     }
-//     // return value;
-// }
+void Parser::print()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    if(curr_token == Symbol::String){
+        curr_token = lexer.getNextSymbol();
+    }else{
+        expr();
+    }
 
-// void Parser::printMap(){
-//     for (auto& x: value_map)
-//         std::cout << x.first << ": " << x.second << std::endl;
-//     std::cout<<"-----------\n";
-// }
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    if(curr_token == Symbol::COMMA){
+        curr_token = lexer.getNextSymbol();
+        expr();
+    }
+
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    while(curr_token == Symbol::COMMA){
+        curr_token = lexer.getNextSymbol();
+        std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+        if(curr_token == Symbol::String){
+            curr_token = lexer.getNextSymbol();
+            if(curr_token == Symbol::COMMA){
+                curr_token = lexer.getNextSymbol();
+                expr();
+            }else{
+                expectedToken(Symbol::COMMA, curr_token);
+            }
+        }else{
+            expectedToken(Symbol::String, curr_token);
+        }
+    }
+
+    if(curr_token == Symbol::NewLine){
+        curr_token = lexer.getNextSymbol();
+    }
+}
+
+void Parser::for_stmt()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    if(curr_token == Symbol::Ident){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::KwIn){
+            curr_token = lexer.getNextSymbol();
+            if(curr_token == Symbol::Ident){
+                curr_token = lexer.getNextSymbol();
+                if(curr_token == Symbol::OPEN_PARENTHESIS){
+                    curr_token = lexer.getNextSymbol();
+                    arg_list();
+                    if(curr_token == Symbol::CLOSE_PARENTHESIS){
+                        curr_token = lexer.getNextSymbol();
+                        if(curr_token == Symbol::COLON){
+                            curr_token = lexer.getNextSymbol();
+                            if(curr_token == Symbol::Indent){
+                                curr_token = lexer.getNextSymbol();
+                                stmt_list();
+                                if(curr_token == Symbol::Dedent){
+                                    curr_token = lexer.getNextSymbol();
+                                }else{
+                                    expectedToken(Symbol::Dedent, curr_token);
+                                }
+                            }else{
+                                expectedToken(Symbol::Indent, curr_token);
+                            }
+                        }else{
+                            expectedToken(Symbol::COLON, curr_token);
+                        }
+                    }else{
+                        expectedToken(Symbol::CLOSE_PARENTHESIS, curr_token);
+                    }
+                }else{
+                    expectedToken(Symbol::OPEN_PARENTHESIS, curr_token);
+                }
+            }else{
+                expectedToken(Symbol::Ident, curr_token);
+            }
+        }else{
+            expectedToken(Symbol::KwIn, curr_token);
+        }
+    }else{
+        expectedToken(Symbol::Ident, curr_token);
+    }
+}
+
+void Parser::if_stmt()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    expr();
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    if(curr_token == Symbol::COLON){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::Indent){
+            curr_token = lexer.getNextSymbol();
+            stmt_list();
+            if_opt();
+        }else{
+            expectedToken(Symbol::Indent, curr_token);
+        }
+    }else{
+        expectedToken(Symbol::COLON, curr_token);
+    }
+}
+
+void Parser::if_opt()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    if(curr_token == Symbol::Eof){
+        return;
+    }else if(curr_token == Symbol::Dedent){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::KwElif){
+            curr_token = lexer.getNextSymbol();
+            elif_stmt();
+        }else if(curr_token == Symbol::KwElse){
+            curr_token = lexer.getNextSymbol();
+            else_stmt();
+        }else{
+            return;
+        }
+    }else{
+        expectedToken(Symbol::Dedent,curr_token);
+        expectedToken(Symbol::Eof,curr_token);
+    }
+}
+
+void Parser::else_stmt()
+{
+    if(curr_token == Symbol::COLON){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::Indent){
+            curr_token = lexer.getNextSymbol();
+            stmt_list();
+            if(curr_token == Symbol::Eof){
+                return;
+            }else if(curr_token == Symbol::Dedent){
+                curr_token = lexer.getNextSymbol();
+            }else{
+                expectedToken(Symbol::Dedent,curr_token);
+                expectedToken(Symbol::Eof,curr_token);
+            }
+        }else{
+            expectedToken(Symbol::Indent,curr_token);
+        }
+    }else{
+        expectedToken(Symbol::COLON,curr_token);
+    }
+}
+
+void Parser::elif_stmt()
+{
+    expr();
+    if(curr_token == Symbol::COLON){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::Indent){
+            curr_token = lexer.getNextSymbol();
+            stmt_list();
+            if_opt();
+        }else{
+            expectedToken(Symbol::Indent, curr_token);
+        }
+    }else{
+        expectedToken(Symbol::COLON, curr_token);
+    }
+}
+
+void Parser::expr()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    term();
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    while(curr_token == Symbol::PLUS ||
+          curr_token == Symbol::MINUS ||
+          curr_token == Symbol::Sameas ||
+          curr_token == Symbol::LessOrEqual ||
+          curr_token == Symbol::LessThan ||
+          curr_token == Symbol::GreaterOrEqual ||
+          curr_token == Symbol::GreaterThan ||
+          curr_token == Symbol::Different
+    ){
+        switch (curr_token)
+        {
+            case Symbol::PLUS:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            case Symbol::MINUS:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            case Symbol::Sameas:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            case Symbol::LessOrEqual:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            case Symbol::LessThan:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            case Symbol::GreaterOrEqual:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            case Symbol::GreaterThan:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            case Symbol::Different:
+            {
+                curr_token = lexer.getNextSymbol();
+                break;
+            }
+            default:
+            {
+                std::cerr<<"Unexpected token: "<<lexer.SymbolToString(curr_token)<<"\n";
+                throw std::exception();
+                break;
+            }
+        }
+        term();
+    }
+}
+
+void Parser::term()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    prod();
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    while(curr_token == Symbol::ASTERISK || curr_token == Symbol::FORWARD_SLASH){
+        if(curr_token == Symbol::ASTERISK){
+            curr_token = lexer.getNextSymbol();
+        }else{
+            curr_token = lexer.getNextSymbol();
+        }
+        prod();
+    }
+}
+
+void Parser::prod()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    factor();
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    while(curr_token == Symbol::PERCENT || curr_token == Symbol::Exp)
+    {
+        if(curr_token == Symbol::PERCENT){
+            curr_token = lexer.getNextSymbol();
+        }else{
+            curr_token = lexer.getNextSymbol();
+        }
+        factor();
+    }
+}
+
+void Parser::factor()
+{
+    std::cout<<"Token: "<<lexer.SymbolToString(curr_token)<<"\n";
+    if(curr_token == Symbol::Number){
+        curr_token = lexer.getNextSymbol();
+
+    }else if(curr_token == Symbol::Ident){
+        curr_token = lexer.getNextSymbol();
+        
+        if(curr_token == Symbol::OPEN_PARENTHESIS){
+            curr_token = lexer.getNextSymbol();
+            arg_list();
+
+            if(curr_token != Symbol::CLOSE_PARENTHESIS){
+                expectedToken(Symbol::CLOSE_PARENTHESIS, curr_token);
+            }else{
+                curr_token = lexer.getNextSymbol();
+            }
+        
+        }else if(curr_token == Symbol::OPEN_BRACKET){
+            curr_token = lexer.getNextSymbol();
+            expr();
+            if(curr_token != Symbol::CLOSE_BRACKET){
+                expectedToken(Symbol::CLOSE_BRACKET, curr_token);
+            }else{
+                curr_token = lexer.getNextSymbol();
+            }
+        }
+    }else if(curr_token == Symbol::OPEN_PARENTHESIS){
+        curr_token = lexer.getNextSymbol();
+        expr();
+        if(curr_token != Symbol::CLOSE_PARENTHESIS){
+            expectedToken(Symbol::CLOSE_PARENTHESIS, curr_token);
+        }else{
+            curr_token = lexer.getNextSymbol();
+        }
+    }else if(curr_token == Symbol::OPEN_BRACKET){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::Number){
+            curr_token = lexer.getNextSymbol();
+            while(curr_token == Symbol::COMMA){
+                curr_token = lexer.getNextSymbol();
+                if(curr_token == Symbol::Number){
+                    curr_token = lexer.getNextSymbol();
+                }else{
+                    expectedToken(Symbol::Number,curr_token);
+                }
+            }
+        }
+        if(curr_token != Symbol::CLOSE_BRACKET){
+            expectedToken(Symbol::CLOSE_BRACKET, curr_token);
+        }else{
+            curr_token = lexer.getNextSymbol();
+        }
+    }else if(curr_token == Symbol::KwInput){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::OPEN_PARENTHESIS){
+            curr_token = lexer.getNextSymbol();
+            if(curr_token == Symbol::String){
+                curr_token = lexer.getNextSymbol();
+                if(curr_token == Symbol::CLOSE_PARENTHESIS){
+                    curr_token = lexer.getNextSymbol();
+                }else{
+                    expectedToken(Symbol::CLOSE_PARENTHESIS, curr_token);
+                }
+            }else{
+                expectedToken(Symbol::String, curr_token);
+            }
+        }else{
+            expectedToken(Symbol::OPEN_PARENTHESIS, curr_token);
+        }
+    }else{
+        std::cerr<<"Unexpected token: "<<lexer.SymbolToString(curr_token)<<"\n";
+        throw std::exception();
+    }
+
+}
+
+void Parser::while_stmt()
+{
+    expr();
+    if(curr_token == Symbol::COLON){
+        curr_token = lexer.getNextSymbol();
+        if(curr_token == Symbol::Indent){
+            curr_token = lexer.getNextSymbol();
+            stmt_list();
+            if(curr_token == Symbol::Eof){
+                return;
+            }else if(curr_token == Symbol::Dedent){
+                curr_token = lexer.getNextSymbol();
+            }else{
+                std::cerr<<"Expected Dedent or Eof token, found "<<lexer.SymbolToString(curr_token)<<"\n";
+            }
+        }else{
+            expectedToken(Symbol::Indent,curr_token);
+        }
+    }else{
+        expectedToken(Symbol::COLON,curr_token);
+    }
+}
+
+void Parser::return_stmt()
+{
+    expr();
+
+    if(curr_token == Symbol::NewLine){
+        curr_token = lexer.getNextSymbol();
+    }
+}

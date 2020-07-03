@@ -7,8 +7,7 @@ CMakeFiles/TinyPython.dir/ProjectLexer.cpp.o
  /home/deafdead/Documentos/compi/Proyecto/build/ProjectLexer.cpp
 CMakeFiles/TinyPython.dir/main.cpp.o
  /home/deafdead/Documentos/compi/Proyecto/ProjectLexer.h
- /home/deafdead/Documentos/compi/Proyecto/ProjectParser.cpp
- /home/deafdead/Documentos/compi/Proyecto/ProjectParser.h
- /home/deafdead/Documentos/compi/Proyecto/ggrammar.cpp
  /home/deafdead/Documentos/compi/Proyecto/ggrammar.h
  /home/deafdead/Documentos/compi/Proyecto/main.cpp
+ /home/deafdead/Documentos/compi/Proyecto/parser.cpp
+ /home/deafdead/Documentos/compi/Proyecto/parser.h

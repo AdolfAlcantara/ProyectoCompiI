@@ -6,9 +6,8 @@ CMakeFiles/TinyPython.dir/ProjectLexer.cpp.o: ../ggrammar.h
 CMakeFiles/TinyPython.dir/ProjectLexer.cpp.o: ProjectLexer.cpp
 
 CMakeFiles/TinyPython.dir/main.cpp.o: ../ProjectLexer.h
-CMakeFiles/TinyPython.dir/main.cpp.o: ../ProjectParser.cpp
-CMakeFiles/TinyPython.dir/main.cpp.o: ../ProjectParser.h
-CMakeFiles/TinyPython.dir/main.cpp.o: ../ggrammar.cpp
 CMakeFiles/TinyPython.dir/main.cpp.o: ../ggrammar.h
 CMakeFiles/TinyPython.dir/main.cpp.o: ../main.cpp
+CMakeFiles/TinyPython.dir/main.cpp.o: ../parser.cpp
+CMakeFiles/TinyPython.dir/main.cpp.o: ../parser.h
 

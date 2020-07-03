@@ -15,6 +15,7 @@ class Parser
 
     void expectedToken(Symbol expected, Symbol found){
         std::cerr<<"Expected token "<<lexer.SymbolToString(expected)<<", found: "<<lexer.SymbolToString(found)<<"\n";         
+        throw std::exception();
     }
     
     void printMap();
@@ -26,11 +27,15 @@ class Parser
         void array();
         void for_stmt();
         void if_stmt();
+        void if_opt();
+        void elif_stmt();
+        void else_stmt();
         void while_stmt();
         void return_stmt();
         void expr();
         void print();
         void assign();
+        void prod();
         void term();
         void factor();
 
